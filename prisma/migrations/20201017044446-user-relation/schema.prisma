@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = "***"
+}
+
+model Profile {
+  id                Int                 @default(autoincrement()) @id
+  socialId          String? 
+  authType          AuthType? 
+  userId            Int                 @unique
+  User              User                @relation(fields: [userId], references: [id])
+}   
+    
+model User {    
+  id                Int                 @default(autoincrement()) @id
+  email             String?             @unique
+  password          String?       
+  name              String?       
+  photoURL          String?    
+  birthday          DateTime?       
+  gender            Gender?       
+  createdAt         DateTime?           @default(now())
+  updatedAt         DateTime?           @default(now()) @updatedAt
+  deletedAt         DateTime?
+  lastSignedIn      DateTime?
+  profile           Profile?
+  workOut           WorkOut[]
+  mission           Mission[]
+  weeklyCount       WeeklyCount[]
+  totalCount        TotalCount[]
+  weeklyAccTime     WeeklyAccTime[]
+  totalAccTime      TotalAccTime[]
+}
+
+model WorkOut {
+  id                Int                 @default(autoincrement()) @id
+  name              String? 
+  workOutType       MissionType?
+  reps              Int?
+  time              Int?
+  set               Int?
+  rest              Int?
+  createdAt         DateTime?           @default(now())
+  updatedAt         DateTime?           @default(now()) @updatedAt
+  deletedAt         DateTime?
+  userId            Int                 @unique
+  User              User                @relation(fields: [userId], references: [id])
+}   
+
+model Mission {
+  id                Int                 @default(autoincrement()) @id
+  createdAt         DateTime?           @default(now())
+  missionType       MissionType
+  workOutId         Int?                @unique
+  WorkOut           WorkOut?            @relation(fields: [workOutId], references: [id])
+  userId            Int                 @unique
+  User              User                @relation(fields: [userId], references: [id])
+}
+
+model WeeklyCount {
+  userId            Int                 @unique
+  createdAt         DateTime?
+  count             Int  
+  User              User                @relation(fields: [userId], references: [id])
+}
+
+model TotalCount {
+  userId            Int                 @unique
+  createdAt         DateTime?           @default(now())
+  deletedAt         DateTime?
+  count             Int  
+  User              User                @relation(fields: [userId], references: [id])
+}
+
+model WeeklyAccTime {
+  userId            Int                 @unique
+  createdAt         DateTime?
+  accTime           Int  
+  User              User                @relation(fields: [userId], references: [id])
+}
+
+model TotalAccTime {
+  userId            Int                 @unique
+  createdAt         DateTime?           @default(now())
+  deletedAt         DateTime?
+  accTime           Int
+  User              User                @relation(fields: [userId], references: [id])
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum AuthType {
+  email
+  google
+  apple
+}
+
+enum MissionType {
+  workout
+}
+
+enum WorkOutType {
+  tabata
+  static
+  setreps
+  maxreps
+  workOutTime
+}
