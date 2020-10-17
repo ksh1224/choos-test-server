@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  push_mysql:
+    build:
+      context: ./mysql
+      dockerfile: ./mysql.Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/syun_secret
+      MYSQL_USER: syun
+      MYSQL_PASSWORD_FILE: /run/secrets/syun_secret
+      MYSQL_DATABASE: pushuser
+    secrets:
+      - syun_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - "db:/var/lib/push_mysql"
+
+secrets:
+  syun_secret:
+    file: syun_secret.txt
+
+volumes:
+  db:
