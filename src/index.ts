@@ -7,8 +7,8 @@ import cors from 'cors';
 import { createServer } from 'http';
 import depthLimit from 'graphql-depth-limit'; // graphql 쿼리 뎁스(복잡성) 제어: DOS 공격 방어
 import express from 'express';
-import { createContext } from './context';
-import { schema } from './schema';
+import { createContext } from '~/context';
+import { schema } from '~/schema';
 
 const main = async () => {
   const formatError = (err: any) => {
