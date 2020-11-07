@@ -41,7 +41,13 @@ export const gender = scalarType({
 });
 
 export enum MissionType {
-  workout = 'workout',
+  tabata = "tabata",
+  static = "static",
+  setreps = "setreps",
+  maxreps = "maxreps",
+  workOutTime = "workOutTime",
+  totalCount = "totalCount",
+  totalAccTime = "totalAccTime",
 }
 
 export const missionType = scalarType({

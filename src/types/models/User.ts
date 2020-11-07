@@ -13,7 +13,7 @@ export const User = objectType({
   name: 'User',
   definition(t) {
     t.model.id();
-    t.model.email();
+    t.model.phoneNumber();
     t.model.password();
     t.model.name();
     t.model.photoURL();
@@ -24,5 +24,10 @@ export const User = objectType({
     t.model.deletedAt();
     t.model.lastSignedIn();
     // t.model.profile();
+    t.model.totalAccTime();
+    t.model.totalCount();
+    t.list.field('workOuts', { type: 'WorkOut', nullable: true });
+    t.list.field('missions', { type: 'Mission', nullable: true });
+    t.list.field('achievements', { type: 'Achievement', nullable: true });
   },
 });

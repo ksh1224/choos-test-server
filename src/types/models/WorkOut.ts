@@ -6,7 +6,7 @@ export const WorkOut = objectType({
   definition(t) {
     t.model.id();
     t.model.name();
-    t.model.workOutType();
+    t.model.missionType();
     t.model.reps();
     t.model.time();
     t.model.set();
@@ -14,6 +14,6 @@ export const WorkOut = objectType({
     t.model.createdAt();
     t.model.updatedAt();
     t.model.deletedAt();
-    t.model.userId();
+    t.field('user', { type: 'User', nullable: true });
   },
 });

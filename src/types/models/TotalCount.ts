@@ -8,5 +8,6 @@ export const TotalCount = objectType({
     t.model.createdAt();
     t.model.deletedAt();
     t.model.count();
+    t.field('user', { type: 'User', nullable: false });
   },
 });
