@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Profile {
@@ -13,7 +13,7 @@ model Profile {
   authType          AuthType? 
   
   userId            Int                 @unique
-  user              User                @relation(fields: [userId], references: [id])
+  User              User                @relation(fields: [userId], references: [id])
 }   
     
 model User {    
@@ -35,7 +35,7 @@ model User {
 
   workOuts          WorkOut[]
   missions          Mission[]
-  achievements      Achievement[]
+  achieves          Achieve[]
 }
 
 model Mission {
@@ -47,9 +47,9 @@ model Mission {
   endAt             DateTime?
 
   winnerId          Int?                 @unique
-  winner            User?                @relation(fields: [winnerId], references: [id])
+  User              User?                @relation(fields: [winnerId], references: [id])
 
-  achieves          Achievement[]
+  achieves          Achieve[]
   conditions        Condition[]
 }
 
@@ -66,15 +66,15 @@ model WorkOut {
   deletedAt         DateTime?
 
   userId            Int?                 @unique
-  user              User?                @relation(fields: [userId], references: [id])
+  User              User?                @relation(fields: [userId], references: [id])
 }
 
-model Achievement {
+model Achieve {
   id                Int                 @default(autoincrement()) @id
   percent           Int?
   
   userId            Int                 @unique
-  user              User                @relation(fields: [userId], references: [id])
+  User              User                @relation(fields: [userId], references: [id])
   missionId         Int                 @unique
   mission           Mission             @relation(fields: [missionId], references: [id])
 }
@@ -94,7 +94,7 @@ model TotalCount {
   deletedAt         DateTime?
 
   userId            Int                 @unique 
-  user              User                @relation(fields: [userId], references: [id])
+  User              User                @relation(fields: [userId], references: [id])
 }
 
 model TotalAccTime {
@@ -104,7 +104,7 @@ model TotalAccTime {
   deletedAt         DateTime?
 
   userId            Int                 @unique
-  user              User                @relation(fields: [userId], references: [id])
+  User              User                @relation(fields: [userId], references: [id])
 }
 
 enum Gender {
