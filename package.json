@@ -58,6 +58,7 @@
     "@nexus/schema": "^0.17.0",
     "@prisma/client": "2.10.0",
     "apollo-server-express": "^2.17.0",
+    "aws-sdk": "^2.787.0",
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.4",
