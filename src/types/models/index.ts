@@ -6,3 +6,4 @@ export * from './Condition';
 export * from './TotalCount';
 export * from './TotalAccTime';
 export * from './Scalar';
+export * from './AuthPayload';
