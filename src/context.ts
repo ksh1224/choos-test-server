@@ -9,8 +9,8 @@ export interface Context {
   request: Request & any;
   prisma: PrismaClient;
   pubsub: PubSub;
-  // appSecret: string;
-  // appSecretEtc: string;
+  appSecret?: string;
+  appSecretEtc?: string;
 }
 
 const pubsub = new PubSub();
@@ -20,7 +20,7 @@ export function createContext(request: Request): Context {
     request,
     prisma,
     pubsub,
-    // appSecret: JWT_SECRET,
-    // appSecretEtc: JWT_SECRET_ETC,
+    appSecret: JWT_SECRET,
+    appSecretEtc: JWT_SECRET_ETC,
   };
 }
