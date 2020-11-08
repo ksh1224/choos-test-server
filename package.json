@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "dotenv -e ./dotenv/.env -- nodemon 'src' --exec 'ts-node-dev' src -e ts,graphql",
-    "dev": "dotenv -e ./dotenv/dev.env -- ts-node-dev --respawn --transpile-only src",
+    "local": "dotenv -e ./dotenv/.env -- nodemon 'src' --exec 'ts-node' src -e ts,graphql",
+    "dev": "dotenv -e ./dotenv/dev.env -- ts-node --transpile-only src",
     "start": "dotenv -e ./dotenv/prod.env -- ts-node src",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && npm -s run generate && tsc",
@@ -51,7 +51,7 @@
     "eslint-plugin-graphql": "^4.0.0",
     "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4",
-    "ts-node-dev": "^1.0.0-pre.62",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   },
   "dependencies": {
