@@ -3,7 +3,7 @@ import { ApolloError } from 'apollo-server-express';
 import { getUserId } from '~/utils/auth';
 import { ErrorString, ErrorVerified } from '~/utils/error';
 
-export const usersQueryField = queryField((t) => {
+export const userQueryField = queryField((t) => {
   t.connectionField('users', {
     type: 'User',
     additionalArgs: { searchText: stringArg() },

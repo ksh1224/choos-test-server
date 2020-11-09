@@ -21,107 +21,109 @@ import { AuthType, Gender } from '~/types/models/Scalar';
 //   gender?: Gender;
 // }
 
-export const signUp = mutationField('signUp', {
-  type: 'User',
-  args: {
-    user: 'UserCreateInput',
-  },
-  resolve: async (_, { user }, ctx) => {
-    const {
-      phoneNumber,
-      password,
-      name,
-      photoURL,
-      birthday,
-      gender,
-    } = user!;
-
-    if (!phoneNumber) throw ErrorPhoneNumber(ErrorString.IncorrectPhoneNumber);
-    if (!password) throw ErrorPassword(ErrorString.IncorrectPassword);
-
-    const hashedPassword = await encryptCredential(password);
-    const created = await ctx.prisma.user.create({
-      data: {
+export const userMutationField = mutationField((t) => {
+  t.field('signUp', {
+    type: 'User',
+    args: {
+      user: 'UserCreateInput',
+    },
+    resolve: async (_, { user }, ctx) => {
+      const {
         phoneNumber,
-        password: hashedPassword,
+        password,
         name,
         photoURL,
         birthday,
         gender,
-      },
-    });
-    return created;
-  },
-});
+      } = user!;
 
-export const userUpdate = mutationField('userUpdate', {
-  type: 'User',
-  args: {
-    user: 'UserUpdateInput',
-  },
-  resolve: async (_, { user }, ctx) => {
-    const {
-      password,
-      name,
-      photoURL,
-      birthday,
-      gender,
-    } = user!;
+      if (!phoneNumber) throw ErrorPhoneNumber(ErrorString.IncorrectPhoneNumber);
+      if (!password) throw ErrorPassword(ErrorString.IncorrectPassword);
 
-    const userId = getUserId(ctx);
-    const data: typeof user = {};
-    if (!!password && validatePassword(password)) throw ErrorPassword(ErrorString.IncorrectPassword);
-    const hashedPassword = !!password && await encryptCredential(password);
+      const hashedPassword = await encryptCredential(password);
+      const created = await ctx.prisma.user.create({
+        data: {
+          phoneNumber,
+          password: hashedPassword,
+          name,
+          photoURL,
+          birthday,
+          gender,
+        },
+      });
+      return created;
+    },
+  });
 
-    if (!userId) throw ErrorVerified(ErrorString.NotExistingToken);
-    if (hashedPassword) data.password = hashedPassword;
-    if (name) data.name = name;
-    if (photoURL) data.photoURL = photoURL;
-    if (birthday) data.birthday = birthday;
-    if (gender) data.gender = gender;
+  t.field('userUpdate', {
+    type: 'User',
+    args: {
+      user: 'UserUpdateInput',
+    },
+    resolve: async (_, { user }, ctx) => {
+      const {
+        password,
+        name,
+        photoURL,
+        birthday,
+        gender,
+      } = user!;
 
-    const created = await ctx.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data,
-    });
-    return created;
-  },
-});
+      const userId = getUserId(ctx);
+      const data: typeof user = {};
+      if (!!password && validatePassword(password)) throw ErrorPassword(ErrorString.IncorrectPassword);
+      const hashedPassword = !!password && await encryptCredential(password);
 
-export const signInPhoneNumber = mutationField('signInPhoneNumber', {
-  type: 'AuthPayload',
-  args: {
-    phoneNumber: stringArg({ nullable: true }),
-    password: stringArg({ nullable: true }),
-  },
-  resolve: async (_, { phoneNumber, password }, ctx) => {
-    if (!phoneNumber || !validatePhoneNumber(phoneNumber)) throw ErrorPhoneNumber(ErrorString.IncorrectPhoneNumber);
-    if (!password || !validatePassword(password)) throw ErrorPassword(ErrorString.IncorrectPassword);
+      if (!userId) throw ErrorVerified(ErrorString.NotExistingToken);
+      if (hashedPassword) data.password = hashedPassword;
+      if (name) data.name = name;
+      if (photoURL) data.photoURL = photoURL;
+      if (birthday) data.birthday = birthday;
+      if (gender) data.gender = gender;
 
-    // const { pubsub } = ctx; // 구독시 필요함
-    const user = await ctx.prisma.user.findOne({
-      where: {
-        phoneNumber,
-      },
-    });
+      const created = await ctx.prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data,
+      });
+      return created;
+    },
+  });
 
-    if (!user) throw ErrorVerified(ErrorString.NotExistingUser);
+  t.field('signInPhoneNumber', {
+    type: 'AuthPayload',
+    args: {
+      phoneNumber: stringArg({ nullable: true }),
+      password: stringArg({ nullable: true }),
+    },
+    resolve: async (_, { phoneNumber, password }, ctx) => {
+      if (!phoneNumber || !validatePhoneNumber(phoneNumber)) throw ErrorPhoneNumber(ErrorString.IncorrectPhoneNumber);
+      if (!password || !validatePassword(password)) throw ErrorPassword(ErrorString.IncorrectPassword);
 
-    const passwordValid = await validateCredential(password, user.password || '');
-    if (!passwordValid) throw ErrorPassword(ErrorString.WrongPassword);
+      // const { pubsub } = ctx; // 구독시 필요함
+      const user = await ctx.prisma.user.findOne({
+        where: {
+          phoneNumber,
+        },
+      });
 
-    ctx.prisma.user.update({
-      where: {
-        phoneNumber,
-      },
-      data: { lastSignedIn: new Date().toISOString() },
-    });
+      if (!user) throw ErrorVerified(ErrorString.NotExistingUser);
 
-    return {
-      token: sign({ userId: user.id }, APP_SECRET),
-      user,
-    };
-  },
+      const passwordValid = await validateCredential(password, user.password || '');
+      if (!passwordValid) throw ErrorPassword(ErrorString.WrongPassword);
+
+      ctx.prisma.user.update({
+        where: {
+          phoneNumber,
+        },
+        data: { lastSignedIn: new Date().toISOString() },
+      });
+
+      return {
+        token: sign({ userId: user.id }, APP_SECRET),
+        user,
+      };
+    },
+  });
 });
