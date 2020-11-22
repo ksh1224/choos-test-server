@@ -1,7 +1,5 @@
 # Prisma Migrate lockfile v1
 
-20201017033209-init-push-db
-20201017044446-user-relation
-20201107031131-init-data-schema
-20201107033101-update-camelcase
-20201107034638-rename-achievement
+20201122080547-init
+20201122081924-error-correction-goal
+20201122083454-re-name-relation-name

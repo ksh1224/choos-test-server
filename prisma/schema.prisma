@@ -34,8 +34,7 @@ model User {
   totalAccTime      TotalAccTime?
 
   workOuts          WorkOut[]
-  missions          Mission[]
-  achievements      Achievement[]
+  goals             Goal[]
 }
 
 model Mission {
@@ -46,10 +45,10 @@ model Mission {
   startAt           DateTime?
   endAt             DateTime?
 
-  winnerId          Int?                 @unique
-  winner            User?                @relation(fields: [winnerId], references: [id])
+  winnerId          Int?                @unique
+  winner            User?               @relation(fields: [winnerId], references: [id])
 
-  achieves          Achievement[]
+  goals             Goal[]
   conditions        Condition[]
 }
 
@@ -65,18 +64,19 @@ model WorkOut {
   updatedAt         DateTime?           @default(now()) @updatedAt
   deletedAt         DateTime?
 
-  userId            Int?                 @unique
-  user              User?                @relation(fields: [userId], references: [id])
+  userId            Int?                @unique
+  user              User?               @relation(fields: [userId], references: [id])
 }
 
-model Achievement {
-  id                Int                 @default(autoincrement()) @id
+model Goal {
   percent           Int?
+  createdAt         DateTime?           @default(now())
   
-  userId            Int                 @unique
+  userId            Int                 
   user              User                @relation(fields: [userId], references: [id])
-  missionId         Int                 @unique
+  missionId         Int                
   mission           Mission             @relation(fields: [missionId], references: [id])
+  @@id([userId, missionId])
 }
 
 model Condition {

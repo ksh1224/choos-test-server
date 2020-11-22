@@ -13,7 +13,7 @@ model Profile {
   authType          AuthType? 
   
   userId            Int                 @unique
-  User              User                @relation(fields: [userId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
 }   
     
 model User {    
@@ -34,8 +34,7 @@ model User {
   totalAccTime      TotalAccTime?
 
   workOuts          WorkOut[]
-  missions          Mission[]
-  achieves          Achieve[]
+  goalmMissions     Goal[]
 }
 
 model Mission {
@@ -46,10 +45,10 @@ model Mission {
   startAt           DateTime?
   endAt             DateTime?
 
-  winnerId          Int?                 @unique
-  User              User?                @relation(fields: [winnerId], references: [id])
+  winnerId          Int?                @unique
+  winner            User?               @relation(fields: [winnerId], references: [id])
 
-  achieves          Achieve[]
+  goalUsers         Goal[]
   conditions        Condition[]
 }
 
@@ -65,18 +64,19 @@ model WorkOut {
   updatedAt         DateTime?           @default(now()) @updatedAt
   deletedAt         DateTime?
 
-  userId            Int?                 @unique
-  User              User?                @relation(fields: [userId], references: [id])
+  userId            Int?                @unique
+  user              User?               @relation(fields: [userId], references: [id])
 }
 
-model Achieve {
-  id                Int                 @default(autoincrement()) @id
+model Goal {
   percent           Int?
+  createdAt         DateTime?           @default(now())
   
-  userId            Int                 @unique
-  User              User                @relation(fields: [userId], references: [id])
-  missionId         Int                 @unique
+  userId            Int                 
+  user              User                @relation(fields: [userId], references: [id])
+  missionId         Int                
   mission           Mission             @relation(fields: [missionId], references: [id])
+  @@id([userId, missionId])
 }
 
 model Condition {
@@ -94,7 +94,7 @@ model TotalCount {
   deletedAt         DateTime?
 
   userId            Int                 @unique 
-  User              User                @relation(fields: [userId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
 }
 
 model TotalAccTime {
@@ -104,7 +104,7 @@ model TotalAccTime {
   deletedAt         DateTime?
 
   userId            Int                 @unique
-  User              User                @relation(fields: [userId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
 }
 
 enum Gender {

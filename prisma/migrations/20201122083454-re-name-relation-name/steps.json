@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "goals",
+      "type": "Goal",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "goalmMissions"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "goals",
+      "type": "Goal",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Mission",
+      "field": "goalUsers"
+    }
+  ]
+}

@@ -22,18 +22,13 @@
       "tag": "CreateEnum",
       "enum": "MissionType",
       "values": [
-        "workout"
-      ]
-    },
-    {
-      "tag": "CreateEnum",
-      "enum": "WorkOutType",
-      "values": [
         "tabata",
         "static",
         "setreps",
         "maxreps",
-        "workOutTime"
+        "workOutTime",
+        "totalCount",
+        "totalAccTime"
       ]
     },
     {
@@ -140,7 +135,7 @@
     {
       "tag": "CreateField",
       "model": "Profile",
-      "field": "User",
+      "field": "user",
       "type": "User",
       "arity": "Required"
     },
@@ -150,7 +145,7 @@
         "path": {
           "tag": "Field",
           "model": "Profile",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       }
@@ -162,7 +157,7 @@
         "path": {
           "tag": "Field",
           "model": "Profile",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -176,7 +171,7 @@
         "path": {
           "tag": "Field",
           "model": "Profile",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -233,7 +228,7 @@
     {
       "tag": "CreateField",
       "model": "User",
-      "field": "email",
+      "field": "phoneNumber",
       "type": "String",
       "arity": "Optional"
     },
@@ -243,7 +238,7 @@
         "path": {
           "tag": "Field",
           "model": "User",
-          "field": "email"
+          "field": "phoneNumber"
         },
         "directive": "unique"
       }
@@ -380,6 +375,201 @@
       "arity": "Optional"
     },
     {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "totalCount",
+      "type": "TotalCount",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "totalAccTime",
+      "type": "TotalAccTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "workOuts",
+      "type": "WorkOut",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "missions",
+      "type": "Mission",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "goals",
+      "type": "Goal",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "Mission"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "title",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "discription",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "reward",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "startAt",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "endAt",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "winnerId",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "winnerId"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "winner",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "winner"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "winner"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[winnerId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Mission",
+          "field": "winner"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "achieves",
+      "type": "Goal",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Mission",
+      "field": "conditions",
+      "type": "Condition",
+      "arity": "List"
+    },
+    {
       "tag": "CreateModel",
       "model": "WorkOut"
     },
@@ -436,7 +626,7 @@
     {
       "tag": "CreateField",
       "model": "WorkOut",
-      "field": "workOutType",
+      "field": "missionType",
       "type": "MissionType",
       "arity": "Optional"
     },
@@ -555,7 +745,7 @@
       "model": "WorkOut",
       "field": "userId",
       "type": "Int",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -571,9 +761,9 @@
     {
       "tag": "CreateField",
       "model": "WorkOut",
-      "field": "User",
+      "field": "user",
       "type": "User",
-      "arity": "Required"
+      "arity": "Optional"
     },
     {
       "tag": "CreateDirective",
@@ -581,7 +771,7 @@
         "path": {
           "tag": "Field",
           "model": "WorkOut",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       }
@@ -593,7 +783,7 @@
         "path": {
           "tag": "Field",
           "model": "WorkOut",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -607,7 +797,7 @@
         "path": {
           "tag": "Field",
           "model": "WorkOut",
-          "field": "User"
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -616,11 +806,183 @@
     },
     {
       "tag": "CreateModel",
-      "model": "Mission"
+      "model": "Goal"
     },
     {
       "tag": "CreateField",
-      "model": "Mission",
+      "model": "Goal",
+      "field": "percent",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Goal",
+      "field": "createdAt",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "createdAt"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "createdAt"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Goal",
+      "field": "userId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Goal",
+      "field": "user",
+      "type": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[userId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Goal",
+      "field": "missionId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Goal",
+      "field": "mission",
+      "type": "Mission",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "mission"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "mission"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[missionId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Goal",
+          "field": "mission"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Goal"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "Goal"
+        },
+        "directive": "id"
+      },
+      "argument": "",
+      "value": "[userId, missionId]"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "Condition"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Condition",
       "field": "id",
       "type": "Int",
       "arity": "Required"
@@ -630,7 +992,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "Condition",
           "field": "id"
         },
         "directive": "default"
@@ -642,7 +1004,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "Condition",
           "field": "id"
         },
         "directive": "default"
@@ -655,7 +1017,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "Condition",
           "field": "id"
         },
         "directive": "id"
@@ -663,7 +1025,82 @@
     },
     {
       "tag": "CreateField",
-      "model": "Mission",
+      "model": "Condition",
+      "field": "missionType",
+      "type": "MissionType",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Condition",
+      "field": "value",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Condition",
+      "field": "missions",
+      "type": "Mission",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "TotalCount"
+    },
+    {
+      "tag": "CreateField",
+      "model": "TotalCount",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TotalCount",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TotalCount",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TotalCount",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "TotalCount",
+      "field": "count",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "TotalCount",
       "field": "createdAt",
       "type": "DateTime",
       "arity": "Optional"
@@ -673,7 +1110,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "TotalCount",
           "field": "createdAt"
         },
         "directive": "default"
@@ -685,7 +1122,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "TotalCount",
           "field": "createdAt"
         },
         "directive": "default"
@@ -695,78 +1132,14 @@
     },
     {
       "tag": "CreateField",
-      "model": "Mission",
-      "field": "missionType",
-      "type": "MissionType",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Mission",
-      "field": "workOutId",
-      "type": "Int",
+      "model": "TotalCount",
+      "field": "deletedAt",
+      "type": "DateTime",
       "arity": "Optional"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Mission",
-          "field": "workOutId"
-        },
-        "directive": "unique"
-      }
-    },
-    {
       "tag": "CreateField",
-      "model": "Mission",
-      "field": "WorkOut",
-      "type": "WorkOut",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Mission",
-          "field": "WorkOut"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Mission",
-          "field": "WorkOut"
-        },
-        "directive": "relation"
-      },
-      "argument": "fields",
-      "value": "[workOutId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Mission",
-          "field": "WorkOut"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Mission",
+      "model": "TotalCount",
       "field": "userId",
       "type": "Int",
       "arity": "Required"
@@ -776,7 +1149,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Mission",
+          "model": "TotalCount",
           "field": "userId"
         },
         "directive": "unique"
@@ -784,8 +1157,8 @@
     },
     {
       "tag": "CreateField",
-      "model": "Mission",
-      "field": "User",
+      "model": "TotalCount",
+      "field": "user",
       "type": "User",
       "arity": "Required"
     },
@@ -794,8 +1167,8 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Mission",
-          "field": "User"
+          "model": "TotalCount",
+          "field": "user"
         },
         "directive": "relation"
       }
@@ -806,8 +1179,8 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Mission",
-          "field": "User"
+          "model": "TotalCount",
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -820,8 +1193,8 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Mission",
-          "field": "User"
+          "model": "TotalCount",
+          "field": "user"
         },
         "directive": "relation"
       },
@@ -830,152 +1203,12 @@
     },
     {
       "tag": "CreateModel",
-      "model": "WeeklyCount"
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyCount",
-      "field": "userId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "WeeklyCount",
-          "field": "userId"
-        },
-        "directive": "unique"
-      }
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyCount",
-      "field": "createdAt",
-      "type": "DateTime",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyCount",
-      "field": "count",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateModel",
-      "model": "TotalCount"
-    },
-    {
-      "tag": "CreateField",
-      "model": "TotalCount",
-      "field": "userId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "TotalCount",
-          "field": "userId"
-        },
-        "directive": "unique"
-      }
-    },
-    {
-      "tag": "CreateField",
-      "model": "TotalCount",
-      "field": "createdAt",
-      "type": "DateTime",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "TotalCount",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "TotalCount",
-          "field": "createdAt"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "now()"
-    },
-    {
-      "tag": "CreateField",
-      "model": "TotalCount",
-      "field": "deletedAt",
-      "type": "DateTime",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "TotalCount",
-      "field": "count",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateModel",
-      "model": "WeeklyAccTime"
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyAccTime",
-      "field": "userId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "WeeklyAccTime",
-          "field": "userId"
-        },
-        "directive": "unique"
-      }
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyAccTime",
-      "field": "createdAt",
-      "type": "DateTime",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "WeeklyAccTime",
-      "field": "accTime",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateModel",
       "model": "TotalAccTime"
     },
     {
       "tag": "CreateField",
       "model": "TotalAccTime",
-      "field": "userId",
+      "field": "id",
       "type": "Int",
       "arity": "Required"
     },
@@ -985,10 +1218,42 @@
         "path": {
           "tag": "Field",
           "model": "TotalAccTime",
-          "field": "userId"
+          "field": "id"
         },
-        "directive": "unique"
+        "directive": "default"
       }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "TotalAccTime",
+      "field": "accTime",
+      "type": "Int",
+      "arity": "Optional"
     },
     {
       "tag": "CreateField",
@@ -1032,9 +1297,66 @@
     {
       "tag": "CreateField",
       "model": "TotalAccTime",
-      "field": "accTime",
+      "field": "userId",
       "type": "Int",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "userId"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "TotalAccTime",
+      "field": "user",
+      "type": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[userId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TotalAccTime",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
     }
   ]
 }
