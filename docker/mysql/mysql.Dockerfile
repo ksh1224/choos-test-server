@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql:8.0
 
 COPY utf8.cnf /etc/mysql/conf.d/
 COPY initdb.sql /docker-entrypoint-initdb.d/

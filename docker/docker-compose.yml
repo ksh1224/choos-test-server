@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/syun_secret
       MYSQL_USER: syun
       MYSQL_PASSWORD_FILE: /run/secrets/syun_secret
-      MYSQL_DATABASE: pushuser
+      MYSQL_DATABASE: push
     secrets:
       - syun_secret
     ports:
