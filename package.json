@@ -12,7 +12,7 @@
     "introspect": "npx prisma introspect",
     "generate": "npx prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
-    "migrate:init": "rm -rf prisma/migrations && npx prisma migrate save --name init --experimental",
+    "migrate:init": "rm -rf prisma/migrations && dotenv -e ./dotenv/.env -- npx prisma migrate save --name init --experimental",
     "migrate:save": "dotenv -e ./dotenv/.env -- npx prisma migrate save --experimental",
     "migrate:up": "dotenv -e ./dotenv/.env -- npx prisma migrate up --experimental",
     "migrate:down": "dotenv -e ./dotenv/.env -- npx prisma migrate down 1 --experimental",
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/syun1224/push-server#readme",
   "devDependencies": {
-    "@prisma/cli": "^2.10.2",
+    "@prisma/cli": "^2.11.0",
     "@types/bcrypt": "^3.0.0",
     "@types/compression": "^1.7.0",
     "@types/ejs": "^3.0.4",
@@ -55,8 +55,8 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@nexus/schema": "^0.17.0",
-    "@prisma/client": "2.10.0",
+    "@nexus/schema": "^0.18.0",
+    "@prisma/client": "2.11.0",
     "apollo-server-express": "^2.17.0",
     "aws-sdk": "^2.787.0",
     "axios": "^0.20.0",
@@ -73,7 +73,7 @@
     "i18next": "^19.8.2",
     "jsonwebtoken": "^8.5.1",
     "link-module-alias": "^1.2.0",
-    "nexus-plugin-prisma": "^0.23.1",
+    "nexus-plugin-prisma": "^0.24.0",
     "node-rsa": "^1.1.1"
   },
   "_moduleAliases": {
