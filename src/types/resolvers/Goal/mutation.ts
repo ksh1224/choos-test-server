@@ -6,7 +6,7 @@ import { getUserId } from "~/utils/auth";
 export const goalMutationField = mutationField((t) => {
   t.field('createGoal', {
     type: "Goal",
-    description: "달성률 추가",
+    description: "달성도 추가",
     args: {
       userId: intArg(),
       missionId: intArg({ required: true }),
@@ -34,7 +34,7 @@ export const goalMutationField = mutationField((t) => {
 
   t.field('updateGoal', {
     type: 'Goal',
-    description: "달성률 업데이트",
+    description: "달성도 업데이트",
     nullable: false,
     args: {
       userId: intArg(),
