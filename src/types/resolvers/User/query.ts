@@ -6,6 +6,7 @@ import { ErrorString, ErrorVerified } from '~/utils/error';
 export const userQueryField = queryField((t) => {
   t.connectionField('users', {
     type: 'User',
+    description: '유저 목록',
     additionalArgs: { searchText: stringArg() },
     async nodes(_, args, ctx) {
       const {
@@ -23,9 +24,9 @@ export const userQueryField = queryField((t) => {
 
   t.field('me', {
     type: 'User',
-    description: 'Fetch current user profile when authenticated.',
+    description: '내 데이터',
     nullable: true,
-    async resolve(_, args, ctx) {
+    resolve: async (_, args, ctx) => {
       const userId = getUserId(ctx);
       if (!userId) throw ErrorVerified(ErrorString.NotExistingToken);
       const user = await ctx.prisma.user.findOne({

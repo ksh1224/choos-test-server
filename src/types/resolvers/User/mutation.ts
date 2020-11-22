@@ -24,8 +24,9 @@ import { AuthType, Gender } from '~/types/models/Scalar';
 export const userMutationField = mutationField((t) => {
   t.field('signUp', {
     type: 'User',
+    description: "회원가입",
     args: {
-      user: 'UserCreateInput',
+      user: 'userCreateInput',
     },
     resolve: async (_, { user }, ctx) => {
       const {
@@ -41,7 +42,7 @@ export const userMutationField = mutationField((t) => {
       if (!password) throw ErrorPassword(ErrorString.IncorrectPassword);
 
       const hashedPassword = await encryptCredential(password);
-      const created = await ctx.prisma.user.create({
+      const createUser = await ctx.prisma.user.create({
         data: {
           phoneNumber,
           password: hashedPassword,
@@ -51,14 +52,15 @@ export const userMutationField = mutationField((t) => {
           gender,
         },
       });
-      return created;
+      return createUser;
     },
   });
 
   t.field('userUpdate', {
     type: 'User',
+    description: "회원 정보 업데이트",
     args: {
-      user: 'UserUpdateInput',
+      user: 'userUpdateInput',
     },
     resolve: async (_, { user }, ctx) => {
       const {
@@ -81,21 +83,22 @@ export const userMutationField = mutationField((t) => {
       if (birthday) data.birthday = birthday;
       if (gender) data.gender = gender;
 
-      const created = await ctx.prisma.user.update({
+      const updateUser = await ctx.prisma.user.update({
         where: {
           id: userId,
         },
         data,
       });
-      return created;
+      return updateUser;
     },
   });
 
   t.field('signInPhoneNumber', {
     type: 'AuthPayload',
+    description: "전화번호 로그인",
     args: {
-      phoneNumber: stringArg({ nullable: true }),
-      password: stringArg({ nullable: true }),
+      phoneNumber: stringArg(),
+      password: stringArg(),
     },
     resolve: async (_, { phoneNumber, password }, ctx) => {
       if (!phoneNumber || !validatePhoneNumber(phoneNumber)) throw ErrorPhoneNumber(ErrorString.IncorrectPhoneNumber);

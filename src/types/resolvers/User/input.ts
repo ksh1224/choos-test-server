@@ -1,7 +1,7 @@
 import { inputObjectType } from "@nexus/schema";
 
-export const UserInputType = inputObjectType({
-  name: 'UserCreateInput',
+export const userCreateInputType = inputObjectType({
+  name: 'userCreateInput',
   definition(t) {
     t.string('phoneNumber', {
       required: true,
@@ -16,8 +16,8 @@ export const UserInputType = inputObjectType({
   },
 });
 
-export const UserUpdateInputType = inputObjectType({
-  name: 'UserUpdateInput',
+export const userUpdateInputType = inputObjectType({
+  name: 'userUpdateInput',
   definition(t) {
     t.string('password');
     t.string('name');
