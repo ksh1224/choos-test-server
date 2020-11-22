@@ -11,7 +11,7 @@ export const Mission = objectType({
     t.model.startAt();
     t.model.endAt();
     t.field('winner', { type: 'User', nullable: true });
-    t.list.field('achievements', { type: 'Achievement', nullable: true });
+    t.list.field('goals', { type: 'Goal', nullable: true });
     t.list.field('conditions', { type: 'Condition', nullable: true });
   },
 });
