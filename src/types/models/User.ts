@@ -28,6 +28,6 @@ export const User = objectType({
     t.model.totalCount();
     t.list.field('workOuts', { type: 'WorkOut', nullable: true });
     t.list.field('missions', { type: 'Mission', nullable: true });
-    t.list.field('achievements', { type: 'Achievement', nullable: true });
+    t.list.field('goals', { type: 'Goal', nullable: true });
   },
 });
