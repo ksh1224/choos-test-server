@@ -1,6 +1,7 @@
 export * from './User';
 export * from './Mission';
 export * from './WorkOut';
+export * from './WorkOutHistory';
 export * from './Goal';
 export * from './Condition';
 export * from './TotalCount';

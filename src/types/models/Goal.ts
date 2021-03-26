@@ -1,5 +1,4 @@
 import { objectType } from '@nexus/schema';
-import { sep } from 'path';
 
 export const Goal = objectType({
   name: 'Goal',
